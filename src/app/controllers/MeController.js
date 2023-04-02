@@ -1,4 +1,5 @@
 const Course = require('../models/Course');
+const Post = require('../models/Post');
 const { mutipleMongooseToObject } = require('../../util/mongoose');
 
 class MeController {
@@ -22,6 +23,16 @@ class MeController {
                     courses: mutipleMongooseToObject(courses),
                 }),
             )
+            .catch(next);
+    }
+    // [GET] /me/trash/news
+    storedNews(req, res, next) {
+        Post.find({})
+            .then(posts => {
+                res.render('me/my-posts', {
+                    posts: mutipleMongooseToObject(posts),
+                });
+            })
             .catch(next);
     }
 }

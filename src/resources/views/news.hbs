@@ -1,1 +1,33 @@
-<h1>NEWS PAGE</h1>
+<!-- views/home.hbs -->
+<div class="container">
+  <div class="row">
+    {{#each posts}}
+    <div class="">
+      <div class="card card-course-item {{#if_eq this.label "High"}}border-danger{{else}}{{#if_eq this.label "Medium"}}border-warning{{else}}border-success{{/if_eq}}{{/if_eq}}">
+        {{#if this.image1}}
+        <div class="row no-gutters">
+          <div class="col-md-4">
+            <img class="card-img-left" src="{{this.image1}}" alt="{{this.title}}" style="width: 100%;">
+          </div>
+          <div class="col-md-8">
+            <img class="card-img-top" src="{{this.image}}" alt="{{this.title}}" style="height: 50%;">
+          </div>
+        </div>
+        {{else}}
+        <img class="card-img-top mx-auto" src="{{this.image}}" alt="{{this.title}}" style="width: 50%; display: block; margin: 0 auto;">
+        {{/if}}
+        <div class="card-body">
+          <h5 class="card-title">{{this.title}}</h5>
+          <p class="card-text">{{this.content}}</p>
+          {{#if_eq this.label "High"}}
+          <p class="card-text"><strong>Label: </strong><span class="text-danger">{{this.label}}</span></p>
+          {{/if_eq}}
+          {{#if this.star}}
+          <p class="card-text"><strong>Star: </strong>{{#times this.star}}<i class="fas fa-star"></i>{{/times}}</p>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+</div>

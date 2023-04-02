@@ -1,0 +1,72 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-8">
+      <h2>Quản lý bài viết</h2>
+    </div>
+    <div class="col-md-4 text-right">
+      <a href="/posts/create" class="btn btn-primary">Thêm bài viết</a>
+    </div>
+  </div>
+  <hr>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Tiêu đề</th>
+        <th scope="col">Nội dung</th>
+        <th scope="col">Hành động</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each posts}}
+      <tr>
+        <th scope="row">{{sum @index 1}}</th>
+        <td>{{this.title}}</td>
+        <td>{{this.content}}</td>
+        <td>
+          <a href="/posts/{{this._id}}/edit" class="btn btn-success">Sửa</a>
+          <button class="btn btn-danger delete-post-btn" data-id="{{this._id}}">Xóa</button>
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
+
+<!-- Modal xóa bài viết -->
+<div class="modal fade" id="deletePostModal" tabindex="-1" role="dialog" aria-labelledby="deletePostModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deletePostModalLabel">Xóa bài viết</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Bạn có chắc chắn muốn xóa bài viết này không?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy bỏ</button>
+        <button type="button" class="btn btn-danger" id="deletePostBtn">Xóa bài viết</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(function() {
+    // Xác định bài viết cần xóa
+    $('.delete-post-btn').click(function() {
+      var postId = $(this).data('id');
+      $('#deletePostBtn').attr('data-id', postId);
+      $('#deletePostModal').modal('show');
+    });
+    
+    // Xác nhận xóa bài viết
+    $('#deletePostBtn').click(function() {
+      var postId = $(this).data('id');
+      window.location.href = '/posts/' + postId + '?_method=DELETE';
+    });
+  });
+</script>

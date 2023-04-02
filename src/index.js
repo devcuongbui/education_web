@@ -28,9 +28,24 @@ app.engine('hbs',
     extname: '.hbs',
     helpers: {
       sum: (a, b) => a + b,
-  }
+      if_eq: function (a, b, opts) {
+        if (a === b) {
+          return opts.fn(this);
+        } else {
+          return opts.inverse(this);
+        }
+      },
+      times: function (n, block) {
+        var accum = '';
+        for (var i = 0; i < n; ++i) {
+          accum += block.fn(i);
+        }
+        return accum;
+      }
+    },
 
-}).engine);
+
+  }).engine);
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'resources/views'));
 
